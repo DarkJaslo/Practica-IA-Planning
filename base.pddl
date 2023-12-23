@@ -88,18 +88,6 @@
         (anterior Octubre Diciembre)
         (anterior Noviembre Diciembre)
 
-
-
-
-        ; Poner libros leidos como leidoL
-
-        ; Poner libros que se quieren leer como quiereL
-
-        ; Poner el resto de libros aqui
-
-
-        ; Predicados sobre predecesores y paralelos aqui
-
         ; (leido Libro0)
         (predecesor Libro0 Libro1)
         (predecesor Libro1 Libro2)
