@@ -20,8 +20,8 @@
 
     ; Valores numericos (fluentes)
     (:functions
-      (paginas ?mes - mes)
-      (anterioridad ?ant - mes ?post - mes) ; numero de meses entre dos meses
+      (paginas-leidas ?mes - mes)
+      (paginas ?l - libro)
     )
 
     ; Ejemplo de accion
@@ -35,6 +35,10 @@
     :parameters (?l - libro ?m - mes ?mant - mes)
     :precondition (and (not (asignado ?l))
                         (inm_anterior ?mant ?m)
+                  ; Verifica numero de paginas mensuales
+                    (<= (+ (paginas-leidas ?m) (paginas ?l)) 800)
+
+                  ; Verifica que todos los prerequisitos se han asignado
                   (forall (?pre - libro 
                            ?mpre - mes) 
                                 (imply 
@@ -42,6 +46,7 @@
                                       (leyendo ?pre ?mpre) 
                                 )
                   )
+                  ; Verifica que si hay paralelos, se lean a la vez o el mes inmediatamente anterior
                   (forall (?par - libro) (imply (paralelo ?par ?l) 
                                                   (or (leyendo ?par ?m)
                                                       (leyendo ?par ?mant))
