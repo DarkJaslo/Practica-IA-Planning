@@ -7,6 +7,7 @@
     (:objects 
         Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre - mes
         Libro1 Libro2 Libro3 Libro4 - quiereL
+        Libro0 - otrosL
     )
 
     (:init
@@ -101,6 +102,11 @@
 
         ; Predicados sobre predecesores y paralelos aqui
 
+        ; (leido Libro0)
+        (predecesor Libro0 Libro1)
+        (predecesor Libro1 Libro2)
+        (predecesor Libro3 Libro4)
+        (= (paginas Libro0) 800)
         (= (paginas Libro1) 800)
         (= (paginas Libro2) 800)
         (= (paginas Libro3) 800)
