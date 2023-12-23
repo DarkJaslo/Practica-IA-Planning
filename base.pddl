@@ -1,7 +1,5 @@
 ; Fichero de problema base
 
-;Header and description
-
 (define (problem Libros-base)
     (:domain Lectura)
     (:objects 
