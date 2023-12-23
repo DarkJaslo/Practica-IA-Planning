@@ -2,7 +2,7 @@
 ; Recomendaciones VSCode: descargar extension PDDL 
 
 (define (domain Lectura)
-    (:requirements :adl :typing)
+    (:requirements :adl :typing :fluents)
 
     (:types
         libro - object
@@ -14,6 +14,11 @@
         (leido ?l - libro)
         (quiere-leer ?l - libro)
 
+    )
+
+    ; Valores numericos (fluentes)
+    (:functions
+        
     )
 
     ; Ejemplo de accion
