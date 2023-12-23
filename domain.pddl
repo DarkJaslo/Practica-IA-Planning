@@ -35,7 +35,8 @@
                   ; Verifica que todos los prerequisitos se han asignado
                   (forall (?pre - libro) (imply (predecesor ?pre ?l) (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?m)) ))))
 
-                  ; Verifica que si hay paralelos, se lean a la vez o el mes inmediatamente anterior
+                  ; Para todos los libros paralelos, si estan asignados, es hace 1 mes o ahora
+                  (forall (?par - libro) (imply (and (paralelo ?par ?l) (asignado ?par)) (or (leyendo ?par ?m) (exists (?mant - mes) (and (inm_anterior ?mant ?m) (leyendo ?par ?mant)) ) )))
                   
                   )
     :effect (and (asignado ?l)
