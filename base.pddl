@@ -3,9 +3,10 @@
 ;Header and description
 
 (define (problem Libros-base)
-    (:domain Libros)
+    (:domain Lectura)
     (:objects 
         Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre - mes
+        Libro1 Libro2 Libro3 Libro4 - quiereL
     )
 
     (:init
@@ -99,6 +100,24 @@
 
 
         ; Predicados sobre predecesores y paralelos aqui
+
+        (= (paginas Libro1) 800)
+        (= (paginas Libro2) 800)
+        (= (paginas Libro3) 800)
+        (= (paginas Libro4) 800)
+
+        (= (paginas-leidas Enero) 0)
+        (= (paginas-leidas Febrero) 0)
+        (= (paginas-leidas Marzo) 0)
+        (= (paginas-leidas Abril) 0)
+        (= (paginas-leidas Mayo) 0)
+        (= (paginas-leidas Junio) 0)
+        (= (paginas-leidas Julio) 0)
+        (= (paginas-leidas Agosto) 0)
+        (= (paginas-leidas Septiembre) 0)
+        (= (paginas-leidas Octubre) 0)
+        (= (paginas-leidas Noviembre) 0)
+        (= (paginas-leidas Diciembre) 0)
     )
 
     (:goal 
