@@ -6,7 +6,7 @@
 
     (:types
       libro mes - object
-      quiereL leidoL otrosL - libro
+      quiereL otrosL - libro
     )
 
     (:predicates
@@ -16,6 +16,7 @@
       (leyendo ?l - libro ?m - mes)
       (anterior ?ant - mes ?post - mes)
       (inm_anterior ?ant - mes ?post - mes)
+      (leido ?l - libro)
     )
 
     ; Valores numericos (fluentes)
@@ -24,17 +25,11 @@
       (paginas ?l - libro)
     )
 
-    ; Ejemplo de accion
-    (:action action_name
-        :parameters ()
-        :precondition (and )
-        :effect (and )
-    )
-
   (:action leer
     :parameters (?l - libro ?m - mes ?mant - mes)
     :precondition (and (not (asignado ?l))
                         (inm_anterior ?mant ?m)
+                        (not (leido ?l))
                   ; Verifica numero de paginas mensuales
                     (<= (+ (paginas-leidas ?m) (paginas ?l)) 800)
 
@@ -54,6 +49,8 @@
                   )
                   )
     :effect (and (asignado ?l)
-                  (leyendo ?l ?m))
+                  (leyendo ?l ?m)
+                  (increase (paginas-leidas ?m) (paginas ?l))
+              )
   )
 )
