@@ -53,6 +53,7 @@
                                           )
                   )
                   )
-    :effect (and )
+    :effect (and (asignado ?l)
+                  (leyendo ?l ?m))
   )
 )
