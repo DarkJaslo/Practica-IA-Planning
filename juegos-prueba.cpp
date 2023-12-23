@@ -44,8 +44,12 @@ int main()
     cout << "\n"; //linea en blanco
 
     cout << "\t(:goal\n";
-    cout << "\t\t; Para todos los libros que se quieren leer, asignados al plan\n";
-    cout << "\t\t(forall (?l - quiereL) (asignado ?l))\n";
+    cout << "\t\t; Para todos los libros que se quieren leer, leidos. Para los paralelos a los que se quieren leer, leidos\n";
+    cout << "\t\t(and (forall (?l - quiereL) (asignado ?l))\n";
+    cout << "\t\t\t (forall (?l - libro) (imply (exists (?par - quiereL) (paralelo ?par ?l)) (asignado ?l)))\n";
+
+    cout << "\t\t)\n"; //cierra and
+
     cout << "\t)\n"; //cierra goal
 
     cout << ")\n"; //cierra fichero
