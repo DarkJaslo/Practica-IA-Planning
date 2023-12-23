@@ -6,8 +6,8 @@
     (:domain Lectura)
     (:objects 
         Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre - mes
-        Libro1 Libro2 Libro3 Libro4 - quiereL
-        Libro0 - otrosL
+        Libro1 Libro2 Libro3 Libro4 Par1 - quiereL
+        Libro0 Par2 Par3 - otrosL
     )
 
     (:init
@@ -106,11 +106,21 @@
         (predecesor Libro0 Libro1)
         (predecesor Libro1 Libro2)
         (predecesor Libro3 Libro4)
+        (paralelo Par1 Par2)
+        (paralelo Par2 Par1)
+        (paralelo Par1 Par3)
+        (paralelo Par3 Par1)
+        (paralelo Par2 Par3)
+        (paralelo Par3 Par2)
+        (predecesor Par2 Libro3)
         (= (paginas Libro0) 800)
         (= (paginas Libro1) 800)
         (= (paginas Libro2) 800)
         (= (paginas Libro3) 800)
         (= (paginas Libro4) 800)
+        (= (paginas Par1) 100)
+        (= (paginas Par2) 800)
+        (= (paginas Par3) 700)
 
         (= (paginas-leidas Enero) 0)
         (= (paginas-leidas Febrero) 0)
@@ -127,8 +137,10 @@
     )
 
     (:goal 
-        ; Para todos los libros que se quieren leer, leidos
-        (forall (?l - quiereL) (asignado ?l))
+        ; Para todos los libros que se quieren leer, leidos. Para los paralelos a los que se quieren leer, leidos
+        (and (forall (?l - quiereL) (asignado ?l))
+            (forall (?l - libro) (imply (exists (?par - quiereL) (paralelo ?par ?l)) (asignado ?l)))
+        )
     )
 
 )
