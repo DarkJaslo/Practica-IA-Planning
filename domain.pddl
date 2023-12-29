@@ -42,6 +42,6 @@
     :effect (and (asignado ?l)
                   (leyendo ?l ?m)
                   (increase (paginas-leidas ?m) (paginas ?l))
-              )
+            )
   )  
 )
