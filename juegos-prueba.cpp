@@ -16,10 +16,11 @@ vector<pair<int,int>> PRES;
 vector<pair<int,int>> PARS;
 vector<int> PAGS;
 vector<vector<bool>> DAG;
+vector<vector<bool>> reach; //Matriz que indica si dos nodos estan conectados por algun camino
 int PROB_PRE = 3;   //Sobre 100, se mira entre cada par ordenado
 int PROB_PAR = 3;   //Sobre 100, se mira entre cada par no accesible mutuamente
 int PROB_LEER = 80; //Sobre 100, se mira para cada libro
-int PROB_LEIDO = 5; //Sobre 100, se mira para cada libro
+int PROB_LEIDO = 10; //Sobre 100, se mira para cada libro
 //int SEED = 1234;
 long SEED = time(NULL);
 mt19937 gen;
@@ -80,12 +81,11 @@ void creaDAG()
         }
     }
 
+    reach = vector<vector<bool>>(N, vector<bool>(N,false));
+
     //Entre libros sin dependencias entre medio, pon paralelos
     if(PAR_ON)
     {
-        //Matriz que indica si dos nodos estan conectados por algun camino
-        vector<vector<bool>> reach(N, vector<bool>(N,false));
-
         for(int i = 0; i < N; ++i)
         {
             BFS(i,DAG,reach);
@@ -121,6 +121,17 @@ void creaDAG()
 
     for(int i = 0; i < N; ++i)
     {
+        bool accedido = false;
+        for(int j = 0; j < i; ++j)
+        {
+            if(DAG[j][i])
+            {
+                accedido = true;
+                break;
+            }
+        }
+        if(accedido) continue;
+
         if(rollRandom(PROB_LEIDO))
         {
             LEIDO[i] = true;
@@ -194,16 +205,15 @@ void printUniversalFacts()
 
 void printRelaciones()
 {
-    /* aun no funciona bien
+    //aun no funciona bien
     //Print leidos
     for(int i = 0; i < N; ++i)
-    {
+    {        
         if(LEIDO[i])
         {
             cout << "\t\t(leido Libro" << i << ")\n";
         }
     }
-    */
 
     //Print prerequisitos
     if(PRE_ON)
