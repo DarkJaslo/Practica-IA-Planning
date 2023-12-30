@@ -197,9 +197,10 @@ void usage()
 
 int main(int argc, char** argv)
 {
-    if(argc != 6)
+    if(argc != 5)
     {
         usage();
+        exit(1);
     }
 
     N = atoi(argv[1]);
@@ -218,8 +219,9 @@ int main(int argc, char** argv)
 
     creaDAG();
 
+    cout << "; Fichero generado con el programa, seed " << "(de momento NULL)" << "\n";
     cout << "(define (problem Libros-base)\n";
-    cout << "\t(:domain Libros)\n";
+    cout << "\t(:domain Lectura)\n";
     cout << "\t(:objects\n";
     //meses
     cout << "\t\t"; 
@@ -231,7 +233,6 @@ int main(int argc, char** argv)
     //objetos a continuacion
     cout << "\t\t";
     printObjetos();
-    cout << "\n";    //fin objetos
     cout << "\t)\n"; //cierra parentesis objetos
     cout << "\n";    //linea en blanco
 
