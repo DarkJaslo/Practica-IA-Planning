@@ -1,8 +1,8 @@
 # Ejecuta los juegos de prueba
 
 counter=10
-secs=60
-while [ $counter -le 20 ]
+secs=20
+while [ $counter -le 40 ]
 do
     echo "---------------------------------------------------------"
     echo "ejecutando prueba $counter"
