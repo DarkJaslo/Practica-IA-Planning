@@ -18,12 +18,14 @@ vector<int> PAGS;
 vector<vector<bool>> DAG;
 int PROB_PRE = 3;   //Sobre 100, se mira entre cada par ordenado
 int PROB_PAR = 3;   //Sobre 100, se mira entre cada par no accesible mutuamente
-int PROB_LEER = 90; //Sobre 100, se mira para cada libro
+int PROB_LEER = 80; //Sobre 100, se mira para cada libro
+int PROB_LEIDO = 5; //Sobre 100, se mira para cada libro
 //int SEED = 1234;
 long SEED = time(NULL);
 mt19937 gen;
 uniform_int_distribution<int> distr;
 vector<bool> QUIERE_LEER;
+vector<bool> LEIDO;
 
 bool rollRandom(int prob)
 {
@@ -58,8 +60,7 @@ void creaDAG()
     gen = mt19937(SEED);
     distr = uniform_int_distribution<int>(0,99);
 
-    if(PAG_ON)
-        PAGS = vector<int>(N,0);
+    PAGS = vector<int>(N,0);
     
     DAG = vector<vector<bool>>(N,vector<bool>(N,false));
 
@@ -116,11 +117,21 @@ void creaDAG()
             PAGS[i] = 0;
     }
 
+    LEIDO = vector<bool>(N,false);
+
+    for(int i = 0; i < N; ++i)
+    {
+        if(rollRandom(PROB_LEIDO))
+        {
+            LEIDO[i] = true;
+        }
+    }
+
     QUIERE_LEER = vector<bool>(N,false);
 
     for(int i = 0; i < N; ++i)
     {
-        if(rollRandom(PROB_LEER))
+        if(not LEIDO[i] and rollRandom(PROB_LEER))
         {
             QUIERE_LEER[i] = true;
         }
@@ -183,6 +194,18 @@ void printUniversalFacts()
 
 void printRelaciones()
 {
+    /* aun no funciona bien
+    //Print leidos
+    for(int i = 0; i < N; ++i)
+    {
+        if(LEIDO[i])
+        {
+            cout << "\t\t(leido Libro" << i << ")\n";
+        }
+    }
+    */
+
+    //Print prerequisitos
     if(PRE_ON)
     {
         for(int i = 0; i < PRES.size(); ++i)
@@ -191,6 +214,7 @@ void printRelaciones()
         }
     }
 
+    //Print paralelos
     if(PAR_ON)
     {
         for(int i = 0; i < PARS.size(); ++i)
