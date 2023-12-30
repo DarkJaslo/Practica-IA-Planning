@@ -7,6 +7,15 @@
 using namespace std;
 
 const vector<string> MESES = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+bool PRE_ON;
+bool PAR_ON;
+bool PAG_ON;
+
+
+void printObjetos()
+{
+
+}
 
 void printUniversalFacts()
 {
@@ -24,13 +33,44 @@ void printUniversalFacts()
 	}
 }
 
-int main()
+void printRelaciones()
 {
+
+}
+
+void usage()
+{
+    cout << "Usage: ./juegos-prueba [prerequisitos] [paralelos] [paginas]\nDonde se pone \"on\" u \"off\" en cada campo, en funcion de si se quiere activar o no.\n";
+}
+
+int main(int argc, char** argv)
+{
+    if(argc != 4)
+    {
+        usage();
+    }
+
+    string pre = string(argv[1]);
+    string par = string(argv[2]);
+    string pag = string(argv[3]);
+
+    PRE_ON = pre=="on";
+    PAR_ON = par=="on";
+    PAG_ON = pag=="on";
+
     cout << "(define (problem Libros-base)\n";
     cout << "\t(:domain Libros)\n";
     cout << "\t(:objects\n";
+    //meses
     cout << "\t\t"; 
+    for(const string& mes : MESES)
+        cout << mes << " ";
+    cout << "- mes\n";
+    //fin meses
+
     //objetos a continuacion
+    cout << "\t\t";
+    printObjetos();
     cout << "\n";    //fin objetos
     cout << "\t)\n"; //cierra parentesis objetos
     cout << "\n";    //linea en blanco
@@ -39,6 +79,9 @@ int main()
 
     cout << "\t\t; Datos universales\n";
 	printUniversalFacts();
+
+    cout << "\t\t; Relaciones entre objetos\n";
+    printRelaciones();
     cout << "\t)\n";   //cierra init
 
     cout << "\n"; //linea en blanco
