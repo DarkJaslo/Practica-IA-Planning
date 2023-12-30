@@ -16,10 +16,11 @@ vector<pair<int,int>> PRES;
 vector<pair<int,int>> PARS;
 vector<int> PAGS;
 vector<vector<bool>> DAG;
-int PROB_PRE = 10;
-int PROB_PAR = 10;
-int PROB_LEER = 30;
-int SEED = 1234;
+int PROB_PRE = 3;   //Sobre 100, se mira entre cada par ordenado
+int PROB_PAR = 3;   //Sobre 100, se mira entre cada par no accesible mutuamente
+int PROB_LEER = 90; //Sobre 100, se mira para cada libro
+//int SEED = 1234;
+long SEED = time(NULL);
 mt19937 gen;
 uniform_int_distribution<int> distr;
 vector<bool> QUIERE_LEER;
@@ -107,7 +108,7 @@ void creaDAG()
     if(PAG_ON)
     {
         for(int i = 0; i < N; ++i)
-            PAGS[i] = distr(gen)+1;
+            PAGS[i] = (distr(gen)+1)*3;
     }
     else
     {
@@ -128,20 +129,31 @@ void creaDAG()
 
 void printObjetos()
 {
+    int printed = 0;
     for(int i = 0; i < N; ++i)
     {
         if(QUIERE_LEER[i])
+        {
             cout << "Libro" << i << " "; 
+            printed++;
+        }
+            
     }
-    cout << "- quiereL\n";
+    if(printed > 0) cout << "- quiereL\n";
+    printed = 0;
     cout << "\t\t";
 
     for(int i = 0; i < N; ++i)
     {
         if(not QUIERE_LEER[i])
+        {
             cout << "Libro" << i << " "; 
+            printed++;
+        }
+            
     }
-    cout << "- otrosL\n";
+
+    if(printed > 0) cout << "- otrosL\n";
 }
 
 void printUniversalFacts()
@@ -222,7 +234,7 @@ int main(int argc, char** argv)
 
     creaDAG();
 
-    cout << "; Fichero generado con el programa, seed " << "(de momento NULL)" << "\n";
+    cout << "; Fichero generado con el programa, seed " << SEED << "\n";
     cout << "(define (problem Libros-base)\n";
     cout << "\t(:domain Lectura)\n";
     cout << "\t(:objects\n";
