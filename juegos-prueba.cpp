@@ -16,8 +16,8 @@ vector<pair<int,int>> PRES;
 vector<pair<int,int>> PARS;
 vector<int> PAGS;
 vector<vector<bool>> DAG;
-int PROB_PRE = 30;
-int PROB_PAR = 30;
+int PROB_PRE = 10;
+int PROB_PAR = 10;
 int PROB_LEER = 30;
 int SEED = 1234;
 mt19937 gen;
@@ -146,18 +146,22 @@ void printObjetos()
 
 void printUniversalFacts()
 {
+    cout << "\t\t";
     for(int i = 0; i < MESES.size()-1; ++i)
     {
-        cout << "\t\t(inm_anterior " << MESES[i] << " " << MESES[i+1] << ")\n";
+        cout << "(inm_anterior " << MESES[i] << " " << MESES[i+1] << ") ";
     }
+    cout << "\n";
 
+    cout << "\t\t";
 	for(int i = 0; i < MESES.size(); ++i)
 	{
         for(int j = i+1; j < MESES.size(); ++j)
         {
-            cout << "\t\t(anterior " << MESES[i] << " " << MESES[j] << ")\n";
+            cout << "(anterior " << MESES[i] << " " << MESES[j] << ") ";
         }
 	}
+    cout << "\n";
 
     for(int i = 0; i < MESES.size(); ++i)
     {
@@ -179,8 +183,7 @@ void printRelaciones()
     {
         for(int i = 0; i < PARS.size(); ++i)
         {
-            cout << "\t\t(paralelo Libro" << PARS[i].first << " Libro" << PARS[i].second << ")";
-            cout << " (paralelo Libro" << PARS[i].second << " Libro" << PARS[i].first << ")\n";
+            cout << "\t\t(paralelo Libro" << PARS[i].first << " Libro" << PARS[i].second << ")\n";
         }
     }
 
