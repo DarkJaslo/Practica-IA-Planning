@@ -26,22 +26,23 @@
     )
 
   (:action leer
-    :parameters (?l - libro ?m - mes)
+    :parameters (?l - libro ?mact - mes ?mant - mes)
     :precondition (and (not (asignado ?l))
                         (not (leido ?l))
+                        (inm_anterior ?mant ?mact)
                   ; Verifica numero de paginas mensuales
-                    (<= (+ (paginas-leidas ?m) (paginas ?l)) 800)
+                    (<= (+ (paginas-leidas ?mact) (paginas ?l)) 800)
 
-                  ; Verifica que todos los prerequisitos se han asignado
-                  (forall (?pre - libro) (imply (predecesor ?pre ?l) (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?m)) ))))
+                  ; Verifica que todos los prerequisitos se han asignado a meses previos al actual
+                  (forall (?pre - libro) (imply (predecesor ?pre ?l) (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?mact)) ))))
 
-                  ; Para todos los libros paralelos, si estan asignados, es hace 1 mes o ahora
-                  (forall (?par - libro) (imply (and (paralelo ?par ?l) (asignado ?par)) (or (leyendo ?par ?m) (exists (?mant - mes) (and (inm_anterior ?mant ?m) (leyendo ?par ?mant)) ) )))
+                  ; Para todos los libros paralelos, si estan asignados, es en el mes anterior (mant) o en el actual (mact)
+                  (forall (?par - libro) (imply (and (paralelo ?par ?l) (asignado ?par)) (or (leyendo ?par ?mact) (leyendo ?par ?mant)  )))
                   
                   )
     :effect (and (asignado ?l)
-                  (leyendo ?l ?m)
-                  (increase (paginas-leidas ?m) (paginas ?l))
+                  (leyendo ?l ?mact)
+                  (increase (paginas-leidas ?mact) (paginas ?l))
             )
   )  
 )
