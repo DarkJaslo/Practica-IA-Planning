@@ -253,6 +253,8 @@ int main(int argc, char** argv)
     }
 
     N = atoi(argv[1]);
+    //PROB_PRE = 200/((3*N)/2);
+    //PROB_PAR = 200/((3*N)/2);
     string pre = string(argv[2]);
     string par = string(argv[3]);
     string pag = string(argv[4]);
@@ -299,7 +301,7 @@ int main(int argc, char** argv)
     cout << "\t(:goal\n";
     cout << "\t\t; Para todos los libros que se quieren leer, leidos. Para los paralelos a los que se quieren leer, leidos\n";
     cout << "\t\t(and (forall (?l - quiereL) (asignado ?l))\n";
-    cout << "\t\t\t (forall (?l - libro) (imply (exists (?par - quiereL) (paralelo ?par ?l)) (asignado ?l)))\n";
+    cout << "\t\t\t (forall (?l - libro) (imply (exists (?par - quiereL) (paralelo ?par ?l)) (or (leido ?l) (asignado ?l))))\n";
 
     cout << "\t\t)\n"; //cierra and
 
