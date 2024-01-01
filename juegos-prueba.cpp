@@ -181,6 +181,7 @@ void printObjetos()
 void printUniversalFacts()
 {
     cout << "\t\t";
+    cout << "(inm_anterior Casper Enero) ";
     for(int i = 0; i < MESES.size()-1; ++i)
     {
         cout << "(inm_anterior " << MESES[i] << " " << MESES[i+1] << ") ";
@@ -276,6 +277,7 @@ int main(int argc, char** argv)
     cout << "\t(:objects\n";
     //meses
     cout << "\t\t"; 
+    cout << "Casper" << " ";
     for(const string& mes : MESES)
         cout << mes << " ";
     cout << "- mes\n";
