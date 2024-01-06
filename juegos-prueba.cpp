@@ -3,6 +3,7 @@
 */
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <random>
 using namespace std;
@@ -240,38 +241,45 @@ void printRelaciones()
     }
 }
 
-// Imprime el grafo en notacion DOT para poder visualizarlo
-void printPreDOT()
+/*
+    Imprime el grafo en formato DOT, para poderse visualizar
+    https://stackoverflow.com/questions/13236975/graphviz-dot-mix-directed-and-undirected
+*/
+void printDOT()
 {
-    cerr << "\n";
-    cerr << "digraph PRE_JP {\n";
+    string filename = "grafos/grafo" + std::to_string(N) + ".dot";
+    ofstream output(filename);
+    output << "digraph {\n";
 
+    output << "\t";
+    for(int i = 0; i < N; ++i)
+    {
+        output << i << "; ";
+    }
+    output << "\n";
+
+    output << "\tsubgraph Par {\n";
+    output << "\t\tedge [dir=none, color=red]\n";
+    for(int i = 0; i < PARS.size(); i+=2)
+    {
+        output << "\t\t" << PARS[i].first << " -> " << PARS[i].second << ";\n";
+    }
+    output << "\t}\n\n";
+
+    output << "\tsubgraph Pre {\n";
+    output << "\t\tedge [color=blue]\n";
     for(int i = 0; i < N; ++i)
     {
         for(int j = i+1; j < N; ++j)
         {
             if(DAG[i][j])
             {
-                cerr << "\t" << i << " -> " << j << ";\n";
+                output << "\t\t" << i << " -> " << j << ";\n";
             }
         }
     }
-
-    cerr << "}\n";
-}
-
-// Imprime los paralelos en notacion DOT para poder visualizarlos
-void printParDOT()
-{
-    cerr << "\n";
-    cerr << "graph PAR_JP {\n";
-
-    for(int i = 0; i < PARS.size(); i+=2)
-    {
-        cerr << "\t" << PARS[i].first << " -- " << PARS[i].second << ";\n";
-    }
-
-    cerr << "}\n";
+    output << "\t}\n";
+    output << "}\n";
 }
 
 void usage()
@@ -345,6 +353,7 @@ int main(int argc, char** argv)
 
     cout << ")\n"; //cierra fichero
 
-    printPreDOT();
-    printParDOT();
+    //printPreDOT();
+    //printParDOT();
+    printDOT();
 }
