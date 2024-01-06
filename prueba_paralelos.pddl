@@ -38,7 +38,7 @@
     )
 
     (:goal 
-        ; Para todos los libros que se quieren leer, leidos. Para los paralelos a los que se quieren leer, leidos
+        ; Para todos los libros que se quieren leer, asignados. Para los paralelos a los asignados, ya leidos o asignados
         (and (forall (?l - quiereL) (asignado ?l))
             (forall (?l - libro ?par - libro) (imply (and (asignado ?l) (paralelo ?l ?par)) (or (asignado ?par) (leido ?par))))
         )
