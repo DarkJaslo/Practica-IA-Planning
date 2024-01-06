@@ -240,6 +240,40 @@ void printRelaciones()
     }
 }
 
+// Imprime el grafo en notacion DOT para poder visualizarlo
+void printPreDOT()
+{
+    cerr << "\n";
+    cerr << "digraph PRE_JP {\n";
+
+    for(int i = 0; i < N; ++i)
+    {
+        for(int j = i+1; j < N; ++j)
+        {
+            if(DAG[i][j])
+            {
+                cerr << "\t" << i << " -> " << j << ";\n";
+            }
+        }
+    }
+
+    cerr << "}\n";
+}
+
+// Imprime los paralelos en notacion DOT para poder visualizarlos
+void printParDOT()
+{
+    cerr << "\n";
+    cerr << "graph PAR_JP {\n";
+
+    for(int i = 0; i < PARS.size(); i+=2)
+    {
+        cerr << "\t" << PARS[i].first << " -- " << PARS[i].second << ";\n";
+    }
+
+    cerr << "}\n";
+}
+
 void usage()
 {
     cout << "Usage: ./juegos-prueba [N] [prerequisitos] [paralelos] [paginas]\nN es el numero de libros\nEn prerequisitos, paralelos y paginas, se pone \"on\" u \"off\" en cada campo, en funcion de si se quiere activar o no.\n";
@@ -264,10 +298,10 @@ int main(int argc, char** argv)
     PAR_ON = par=="on";
     PAG_ON = pag=="on";
 
-    cerr << "DEBUG: DAG con " << N << " libros:\n";
-    cerr << "prerequisitos "; PRE_ON ? cerr << "on" : cerr << "off"; cerr << "\n";
-    cerr << "paralelos "; PAR_ON ? cerr << "on" : cerr << "off"; cerr << "\n";
-    cerr << "npaginas "; PAG_ON ? cerr << "on" : cerr << "off"; cerr << "\n";
+    cout << "; DEBUG: DAG con " << N << " libros:\n";
+    cout << "; prerequisitos "; PRE_ON ? cout << "on" : cout << "off"; cout << "\n";
+    cout << "; paralelos "; PAR_ON ? cout << "on" : cout << "off"; cout << "\n";
+    cout << "; npaginas "; PAG_ON ? cout << "on" : cout << "off"; cout << "\n";
 
     creaDAG();
 
@@ -310,4 +344,7 @@ int main(int argc, char** argv)
     cout << "\t)\n"; //cierra goal
 
     cout << ")\n"; //cierra fichero
+
+    printPreDOT();
+    printParDOT();
 }
