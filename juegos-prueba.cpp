@@ -57,9 +57,11 @@ public:
 
 const vector<string> MESES = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 bool PRE_ON;
+bool MULTIPRE_ON;
 bool PAR_ON;
 bool PAG_ON;
 int N;
+string ext; //Extensiones
 vector<pair<int,int>> PRES;
 vector<pair<int,int>> PARS;
 vector<int> PAGS;
@@ -135,6 +137,12 @@ void creaDAG()
     {
         for(int i = 0; i < N; ++i)
         {
+            //Si solo se puede tener un prerrequisito, hay que asegurar que no se encadenan mas
+            if(not MULTIPRE_ON)
+            {
+                if(numSalidas[i] >= 1 or numEntradas[i] >= 1) continue;
+            }
+
             for(int j = i+1; j < N; ++j)
             {       
                 //Tampoco se conectan vertices que ya estan conectados de alguna otra forma     
@@ -312,13 +320,16 @@ void printObjetos()
 
 void printUniversalFacts()
 {
-    cout << "\t\t";
-    cout << "(inm_anterior Casper Enero) ";
-    for(int i = 0; i < MESES.size()-1; ++i)
+    if(PAR_ON)
     {
-        cout << "(inm_anterior " << MESES[i] << " " << MESES[i+1] << ") ";
+        cout << "\t\t";
+        cout << "(inm_anterior Casper Enero) ";
+        for(int i = 0; i < MESES.size()-1; ++i)
+        {
+            cout << "(inm_anterior " << MESES[i] << " " << MESES[i+1] << ") ";
+        }
+        cout << "\n";
     }
-    cout << "\n";
 
     cout << "\t\t";
 	for(int i = 0; i < MESES.size(); ++i)
@@ -330,9 +341,12 @@ void printUniversalFacts()
 	}
     cout << "\n";
 
-    for(int i = 0; i < MESES.size(); ++i)
+    if(PAG_ON)
     {
-        cout << "\t\t(= (paginas-leidas " << MESES[i] << ") 0)\n";
+        for(int i = 0; i < MESES.size(); ++i)
+        {
+            cout << "\t\t(= (paginas-leidas " << MESES[i] << ") 0)\n";
+        }
     }
 }
 
@@ -388,10 +402,13 @@ void printRelaciones()
         */
     }
 
-    //Print paginas
-    for(int i = 0; i < N; ++i)
+    if(PAG_ON)
     {
-        cout << "\t\t(= (paginas Libro" << i << ") " << PAGS[i] << ")\n";
+        //Print paginas
+        for(int i = 0; i < N; ++i)
+        {
+            cout << "\t\t(= (paginas Libro" << i << ") " << PAGS[i] << ")\n";
+        }
     }
 }
 
@@ -401,7 +418,12 @@ void printRelaciones()
 */
 void printDOT()
 {
-    string filename = "grafos/grafo" + std::to_string(N) + ".dot";
+    string filename = "grafos-";
+    filename.append(ext);
+    filename.append("/grafo");
+    filename.append(std::to_string(N));
+    filename.append(".dot");
+
     ofstream output(filename);
     output << "digraph {\n";
 
@@ -412,69 +434,106 @@ void printDOT()
     }
     output << "\n";
 
-    output << "\tsubgraph Par {\n";
-    output << "\t\tedge [dir=none, color=red]\n";
-
-    /* Printea solo las aristas del problema
-    for(int i = 0; i < PARS.size(); i+=2)
+    if(PAR_ON)
     {
-        //if(PARS[i].first > PARS[i].second) continue;
-        output << "\t\t" << PARS[i].first << " -> " << PARS[i].second << ";\n";
-    }
-    */
+        output << "\tsubgraph Par {\n";
+        output << "\t\tedge [dir=none, color=red]\n";
 
-    /* Printea todas las aristas entre paralelos (preferible, se entiende mejor) */
-    for(int i = 0; i < N; ++i)
-    {
-        for(int j = i+1; j < N; ++j)
+        /* Printea solo las aristas del problema
+        for(int i = 0; i < PARS.size(); i+=2)
         {
-            if(PARALELO[i][j])
+            //if(PARS[i].first > PARS[i].second) continue;
+            output << "\t\t" << PARS[i].first << " -> " << PARS[i].second << ";\n";
+        }
+        */
+
+        /* Printea todas las aristas entre paralelos (preferible, se entiende mejor) */
+        for(int i = 0; i < N; ++i)
+        {
+            for(int j = i+1; j < N; ++j)
             {
-                output << "\t\t" << i << " -> " << j << ";\n";
+                if(PARALELO[i][j])
+                {
+                    output << "\t\t" << i << " -> " << j << ";\n";
+                }
             }
         }
+
+        output << "\t}\n\n";
     }
 
-    output << "\t}\n\n";
-
-    output << "\tsubgraph Pre {\n";
-    output << "\t\tedge [color=blue]\n";
-    for(int i = 0; i < N; ++i)
+    if(PRE_ON)
     {
-        for(int j = i+1; j < N; ++j)
+        output << "\tsubgraph Pre {\n";
+        output << "\t\tedge [color=blue]\n";
+        for(int i = 0; i < N; ++i)
         {
-            if(DAG[i][j])
+            for(int j = i+1; j < N; ++j)
             {
-                output << "\t\t" << i << " -> " << j << ";\n";
+                if(DAG[i][j])
+                {
+                    output << "\t\t" << i << " -> " << j << ";\n";
+                }
             }
         }
+        output << "\t}\n";
+        output << "}\n";
     }
-    output << "\t}\n";
-    output << "}\n";
 }
 
 void usage()
 {
-    cout << "Usage: ./juegos-prueba [N] [prerequisitos] [paralelos] [paginas] [seed]\nN es el numero de libros\nEn prerequisitos, paralelos y paginas, se pone \"on\" u \"off\" en cada campo, en funcion de si se quiere activar o no.\nHay que especificar una seed para los numeros aleatorios\n";
+    cout << "Usage: ./juegos-prueba [N] [seed] [extensiones]\nN es el numero de libros\nHay que especificar una seed para los numeros aleatorios\nPara las extensiones, las opciones son:\nbasico\next1\next2\next3\n";
 }
 
 int main(int argc, char** argv)
 {
-    if(argc != 6)
+    if(argc != 4)
     {
         usage();
         exit(1);
     }
 
     N = atoi(argv[1]);
-    string pre = string(argv[2]);
-    string par = string(argv[3]);
-    string pag = string(argv[4]);
-    SEED = atol(argv[5]);
+    //string pre = string(argv[2]);
+    //string par = string(argv[3]);
+    //string pag = string(argv[4]);
+    SEED = atol(argv[2]);
+    ext = string(argv[3]);
 
-    PRE_ON = pre=="on";
-    PAR_ON = par=="on";
-    PAG_ON = pag=="on";
+    if(ext == "basico")
+    {
+        PRE_ON = true;
+        MULTIPRE_ON = false;
+        PAR_ON = false;
+        PAG_ON = false;
+    }
+    else if(ext == "ext1")
+    {
+        PRE_ON = true;
+        MULTIPRE_ON = true;
+        PAR_ON = false;
+        PAG_ON = false;
+    }
+    else if(ext == "ext2")
+    {
+        PRE_ON = true;
+        MULTIPRE_ON = true;
+        PAR_ON = true;
+        PAG_ON = false;
+    }
+    else if(ext == "ext3")
+    {
+        PRE_ON = true;
+        MULTIPRE_ON = true;
+        PAR_ON = true;
+        PAG_ON = true;
+    }
+    else
+    {
+        cerr << "La extension especificada, \"" << ext << "\", no esta en las opciones\n";
+        exit(1);
+    }
 
     cout << "; DEBUG: DAG con " << N << " libros:\n";
     cout << "; prerequisitos "; PRE_ON ? cout << "on" : cout << "off"; cout << "\n";
