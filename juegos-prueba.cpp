@@ -1,5 +1,5 @@
 /*
-    Programa para generar juegos de prueba aleatorios del planner, by Jon Campillo
+    Programa para generar juegos de prueba aleatorios del planner
 */
 
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <random>
 using namespace std;
 
-// Union-find set implementation
+// Union-find set.
 class UnionFind {
 private:
     vector<int> parent;
@@ -65,87 +65,80 @@ vector<pair<int,int>> PARS;
 vector<int> PAGS;
 vector<vector<bool>> DAG;
 vector<vector<bool>> PARALELO;
-vector<vector<bool>> reach; //Matriz que indica si dos nodos estan conectados por algun camino
-int PROB_PRE = 5;   //Sobre 100, se mira entre cada par ordenado
-int PROB_PAR = 10;   //Sobre 100, se mira entre cada par no accesible mutuamente
-int PROB_LEER = 80; //Sobre 100, se mira para cada libro
+int PROB_PRE = 5;    //Sobre 100, se mira entre cada par ordenado
+int PROB_PAR = 10;   //Sobre 100, afectan varios factores
 int PROB_LEIDO = 10; //Sobre 100, se mira para cada libro
-long SEED = 1704571405;
+int PROB_LEER = 80;  //Sobre 100, se mira para cada libro no leido
+long SEED;
+//long SEED = 1704571405; //Provisional
 //long SEED = time(NULL);
 mt19937 gen;
 uniform_int_distribution<int> distr;
 vector<bool> QUIERE_LEER;
 vector<bool> LEIDO;
 
+/*
+    Cuantos mas libros paralelos tengan A y B, menos probable es que se puedan juntar. Esto es importante, 
+    porque la relacion es transitiva y en seguida se tienen grupos de 8 o 9 paralelos (demasiado forzado).
+    En concreto, ahora es imposible que haya grupos de mas de 4 paralelos
+    Se anima a que haya bastantes paralelos (prob "alta" si no tienen paralelos), pero no grandes agrupaciones 
+    donde todos lo son.
+*/
 int probPar(int parA, int parB)
 {
-    int pars = (parA+1)+(parB+1);
+    int pars = (parA+1)+(parB+1); //Calculo de cuantos libros seran paralelos si se juntan estos dos
     int res = PROB_PAR - 3*pars;
 
     if(res < 0) return -1;
     return res;
 }
 
+/*
+    Probabilidad nula si ya entran aristas en el nodo destino o si ya salen aristas del nodo origen
+    Esto hace que no se generen todos los grafos, pero genera las dependencias mas "naturales" y se evitan grafos muy raros/facilmente incompatibles luego con los paralelos
+*/
 int probPre(int sale, int entra)
 {
     if(sale >= 1 or entra >= 1) return -1;
     return PROB_PRE;
-    /*
-    int res = PROB_PRE - 10*sale;
-    if(res < 0) return -1;
-    return res;
-    */
 }
 
+//Macro, entra una probabilidad y si el numero generado es menor devuelve cierto
+//Por lo tanto, si prob=2 y randomN=1, cierto. Si randomN=13, falso.
 bool rollRandom(int prob)
 {
     int randomN = distr(gen);
     return randomN < prob;
 }
 
-void BFS(int nodo, vector<vector<bool>>& DAG, vector<vector<bool>>& reach, UnionFind& accesibles)
-{
-    for(int i = nodo+1; i < N; ++i)
-    {
-        if(DAG[nodo][i] and (accesibles.find(nodo) != accesibles.find(i)))
-        {
-            reach[nodo][i] = true;
-            accesibles.unionSets(nodo,i);
-
-            for(int j = 0; j < nodo; ++j)
-            {
-                if(reach[j][nodo])
-                {
-                    reach[j][i] = true;
-                    reach[i][j] = true;
-                }
-            }
-
-            reach[i][nodo] = true;
-        }
-    }
-}
-
 void creaDAG()
 {   
+    //Generacion de numeros aleatorios
     gen = mt19937(SEED);
     distr = uniform_int_distribution<int>(0,99);
 
-    PAGS = vector<int>(N,0);
-    
+    /*
+        Asignacion de prerrequisitos. Se construye un DAG, con el pseudocodigo siguiente:
+        forall vertice u
+            forall vertice v > u
+                con cierta probabilidad, pon arista u->v
+        
+        Se aprovecha para guardar en un Union-Find los componentes conexos para mas tarde
+        La probabilidad depende de las aristas que salen de u y de las aristas que entran en v
+    */
     DAG = vector<vector<bool>>(N,vector<bool>(N,false));
     vector<int> numSalidas(N,0);
     vector<int> numEntradas(N,0);
     UnionFind accesibles(N);
 
-    //Crea dependencias
     if(PRE_ON)
     {
         for(int i = 0; i < N; ++i)
         {
             for(int j = i+1; j < N; ++j)
-            {            
-                if((accesibles.find(i) != accesibles.find(j)) and rollRandom(probPre(numSalidas[i], numEntradas[j])))
+            {       
+                //Tampoco se conectan vertices que ya estan conectados de alguna otra forma     
+                if(not accesibles.same(i,j) and rollRandom(probPre(numSalidas[i], numEntradas[j])))
                 {
                     DAG[i][j] = true;
                     numSalidas[i]++;
@@ -157,23 +150,29 @@ void creaDAG()
         }
     }
 
-    reach = vector<vector<bool>>(N, vector<bool>(N,false));
-
-    //Entre libros sin dependencias entre medio, pon paralelos
-    PARALELO = vector<vector<bool>>(N,vector<bool>(N,false));
+    /*
+        Seleccion de libros paralelos.
+        Se utiliza un Union-Find para guardar los diferentes componentes conexos (grupos de libros paralelos)
+    */
     vector<int> numParalelos(N,0);
     UnionFind paralelos(N);
 
     if(PAR_ON)
     {
-        //Para los que no esten conectados, se puede poner paralelo
         for(int i = 0; i < N; ++i)
         {
+            //j = i+1 para evitar dobles aristas
             for(int j = i+1; j < N; ++j)
             {
+                //no pueden estar conectados por dependencias ni ser ya paralelos
                 if(accesibles.same(i,j) or paralelos.same(i,j)) continue;
 
-                //Check grande
+                /*
+                    Se prueba que pasa si se hace el cambio (se pone la relacion de paralelos).
+                    - Si esto causa indirectamente que haya algun par de libros relacionados por paralelos pero tambien por prerrequisitos, no se puede poner paralelo aqui
+                    - Si no pasa, es seguro continuar
+                */
+                //Copia para poder deshacer el cambio
                 UnionFind tempParalelos = paralelos;
                 tempParalelos.unionSets(i,j);
                 bool compatible = true;
@@ -183,7 +182,7 @@ void creaDAG()
                     for(int l = 0; l < N; ++l)
                     {
                         if(k==l) continue;
-                        if(tempParalelos.same(k,l) and accesibles.same(k,l)) //Borra la cuenta
+                        if(tempParalelos.same(k,l) and accesibles.same(k,l)) //Incompatible
                         {
                             compatible = false;
                             break;
@@ -195,19 +194,19 @@ void creaDAG()
 
                 if(not compatible) continue;
                 //Else,
-                //Roll random
+
+                //Candidatos validos para ser paralelos. Ahora hay que tirar el dado
                 if(not rollRandom(probPar(numParalelos[i],numParalelos[j]))) continue;
 
                 //Se cumplen todas las condiciones
-
                 PARS.push_back(make_pair(i,j));
                 PARS.push_back(make_pair(j,i));
-
-                //PARALELO[i][j] = true;
-                //PARALELO[j][i] = true;
-
                 paralelos.unionSets(i,j);
 
+                /*
+                    Para poder usar bien la funcion de probabilidad, hay que recalcular cuantos paralelos
+                    tiene cada vertice.
+                */
                 vector<bool> visited(N,false);
                 for(int i = 0; i < N; ++i)
                 {
@@ -227,40 +226,18 @@ void creaDAG()
 
                         for(int index : indicesParalelos)
                             numParalelos[index] = countParalelos;
+                        numParalelos[i] = countParalelos;
 
                         visited[i] = true;
                     }
                 }
-
-                /*numParalelos[i]++;
-                numParalelos[j]++;
-
-                for(int k = 0; k < N; ++k)
-                {
-                    if(k != j and PARALELO[i][k] and not PARALELO[j][k])
-                    {
-                        PARALELO[j][k] = true;
-                        PARALELO[k][j] = true;
-                        numParalelos[j]++;
-                        numParalelos[k]++;
-                        PARS.push_back(make_pair(j,k));
-                        PARS.push_back(make_pair(k,j));
-                    }
-                    if(k != i and PARALELO[j][k] and not PARALELO[i][k])
-                    {
-                        PARALELO[i][k] = true;
-                        PARALELO[k][i] = true;
-                        numParalelos[i]++;
-                        numParalelos[k]++;
-                        PARS.push_back(make_pair(i,k));
-                        PARS.push_back(make_pair(k,i));
-                    }
-                }
-
-                */
             }
         }
 
+        /*
+            Se ponen en una matriz las relaciones de paralelismo entre libros para mas tarde
+        */
+        PARALELO = vector<vector<bool>>(N,vector<bool>(N,false));
         for(int i = 0; i < N; ++i)
         {
             for(int j = 0; j < N; ++j)
@@ -273,17 +250,21 @@ void creaDAG()
         }
     }
     
+    /*
+        Asignacion de paginas.
+        Si estan activadas, se asignan entre 0 y 300 paginas a cada libro.
+        Si no, se asignan 0.
+    */
+    PAGS = vector<int>(N,0);
     if(PAG_ON)
     {
         for(int i = 0; i < N; ++i)
             PAGS[i] = (distr(gen)+1)*3;
     }
-    else
-    {
-        for(int i = 0; i < N; ++i)
-            PAGS[i] = 0;
-    }
 
+    /* 
+        Seleccion de libros leidos. Con PROB_LEIDO, se escogen algunos libros sin prerrequisitos para que ya esten leidos.
+    */
     LEIDO = vector<bool>(N,false);
 
     for(int i = 0; i < N; ++i)
@@ -305,6 +286,10 @@ void creaDAG()
         }
     }
 
+    /*
+        Seleccion de libros que se quieren leer.
+        Con PROB_LEER, se escogen libros no leidos y se ponen como que se quieren leer.
+    */
     QUIERE_LEER = vector<bool>(N,false);
 
     for(int i = 0; i < N; ++i)
@@ -318,31 +303,11 @@ void creaDAG()
 
 void printObjetos()
 {
-    int printed = 0;
     for(int i = 0; i < N; ++i)
     {
-        if(QUIERE_LEER[i])
-        {
-            cout << "Libro" << i << " "; 
-            printed++;
-        }
-            
+        cout << "Libro" << i << " ";
     }
-    if(printed > 0) cout << "- quiereL\n";
-    printed = 0;
-    cout << "\t\t";
-
-    for(int i = 0; i < N; ++i)
-    {
-        if(not QUIERE_LEER[i])
-        {
-            cout << "Libro" << i << " "; 
-            printed++;
-        }
-            
-    }
-
-    if(printed > 0) cout << "- otrosL\n";
+    cout << "- libro\n";
 }
 
 void printUniversalFacts()
@@ -373,13 +338,21 @@ void printUniversalFacts()
 
 void printRelaciones()
 {
-    //aun no funciona bien
     //Print leidos
     for(int i = 0; i < N; ++i)
     {        
         if(LEIDO[i])
         {
             cout << "\t\t(leido Libro" << i << ")\n";
+        }
+    }
+
+    //Print quiere leer
+    for(int i = 0; i < N; ++i)
+    {
+        if(QUIERE_LEER[i])
+        {
+            cout << "\t\t(quiere_leer Libro" << i << ")\n";
         }
     }
 
@@ -395,13 +368,13 @@ void printRelaciones()
     //Print paralelos
     if(PAR_ON)
     {
-        
+        /* Printea solo las aristas necesarias */
         for(int i = 0; i < PARS.size(); ++i)
         {
             cout << "\t\t(paralelo Libro" << PARS[i].first << " Libro" << PARS[i].second << ")\n";
         }
 
-        /*
+        /* Printea todas las relaciones
         for(int i = 0; i < N; ++i)
         {
             for(int j = 0; j < N; ++j)
@@ -413,9 +386,9 @@ void printRelaciones()
             }
         }
         */
-
     }
 
+    //Print paginas
     for(int i = 0; i < N; ++i)
     {
         cout << "\t\t(= (paginas Libro" << i << ") " << PAGS[i] << ")\n";
@@ -441,12 +414,16 @@ void printDOT()
 
     output << "\tsubgraph Par {\n";
     output << "\t\tedge [dir=none, color=red]\n";
-    /*for(int i = 0; i < PARS.size(); i+=2)
+
+    /* Printea solo las aristas del problema
+    for(int i = 0; i < PARS.size(); i+=2)
     {
         //if(PARS[i].first > PARS[i].second) continue;
         output << "\t\t" << PARS[i].first << " -> " << PARS[i].second << ";\n";
-    }*/
+    }
+    */
 
+    /* Printea todas las aristas entre paralelos (preferible, se entiende mejor) */
     for(int i = 0; i < N; ++i)
     {
         for(int j = i+1; j < N; ++j)
@@ -478,23 +455,22 @@ void printDOT()
 
 void usage()
 {
-    cout << "Usage: ./juegos-prueba [N] [prerequisitos] [paralelos] [paginas]\nN es el numero de libros\nEn prerequisitos, paralelos y paginas, se pone \"on\" u \"off\" en cada campo, en funcion de si se quiere activar o no.\n";
+    cout << "Usage: ./juegos-prueba [N] [prerequisitos] [paralelos] [paginas] [seed]\nN es el numero de libros\nEn prerequisitos, paralelos y paginas, se pone \"on\" u \"off\" en cada campo, en funcion de si se quiere activar o no.\nHay que especificar una seed para los numeros aleatorios\n";
 }
 
 int main(int argc, char** argv)
 {
-    if(argc != 5)
+    if(argc != 6)
     {
         usage();
         exit(1);
     }
 
     N = atoi(argv[1]);
-    //PROB_PRE = 200/((3*N)/2);
-    //PROB_PAR = 200/((3*N)/2);
     string pre = string(argv[2]);
     string par = string(argv[3]);
     string pag = string(argv[4]);
+    SEED = atol(argv[5]);
 
     PRE_ON = pre=="on";
     PAR_ON = par=="on";
@@ -538,17 +514,13 @@ int main(int argc, char** argv)
 
     cout << "\t(:goal\n";
 
-    cout << "\t\t; Para todos los libros que se quieren leer, asignados. Para los paralelos a los asignados, ya leidos o asignados\n";
-    cout << "\t\t(and (forall (?l - quiereL) (asignado ?l))\n";
-    cout << "\t\t\t (forall (?l - libro ?par - libro) (imply (and (asignado ?l) (paralelo ?l ?par)) (or (asignado ?par) (leido ?par))))\n";
-
-    cout << "\t\t)\n"; //cierra and
+    cout << "\t\t; Para todos los libros que se quieren leer, asignados.\n";
+    cout << "\t\t(forall (?l - libro) (imply (quiere_leer ?l) (asignado ?l)))\n";
 
     cout << "\t)\n"; //cierra goal
 
     cout << ")\n"; //cierra fichero
 
-    //printPreDOT();
-    //printParDOT();
+    //Print grafo en STDERR
     printDOT();
 }
