@@ -260,14 +260,14 @@ void creaDAG()
     
     /*
         Asignacion de paginas.
-        Si estan activadas, se asignan entre 0 y 300 paginas a cada libro.
-        Si no, se asignan 0.
+        Si estan activadas, se asignan entre 20 y 180 paginas a cada libro.
     */
     PAGS = vector<int>(N,0);
     if(PAG_ON)
     {
+        uniform_int_distribution<int> distrPags(20,180);
         for(int i = 0; i < N; ++i)
-            PAGS[i] = (distr(gen)+1)*3;
+            PAGS[i] = distrPags(gen);
     }
 
     /* 
