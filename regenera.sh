@@ -13,6 +13,6 @@ fi
 
 while [ $counter -le 40 ]
 do
-    ./pruebas $counter on on on > ./juegos-prueba/prueba$counter.pddl 2> ./grafos/grafo$counter.dot
+    ./pruebas $counter on on off > ./juegos-prueba/prueba$counter.pddl 2> ./grafos/grafo$counter.dot
     ((counter++))
 done
