@@ -20,15 +20,14 @@
 
   (:action leer
     :parameters (?l - libro ?mact - mes)
-    :precondition (and (not (asignado ?l))
-                        (not (leido ?l))
-                        ;(quiere_leer ?l)
-                  ; Verifica que todos los prerequisitos se han asignado a meses previos al actual
-                  (forall (?pre - libro) (imply (predecesor ?pre ?l) (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?mact)) ))))
-                  
+    :precondition (and
+                    (not (asignado ?l))
+                    (not (leido ?l))
+
+                    ; Verifica que todos los prerequisitos se han asignado a meses previos al actual
+                    (forall (?pre - libro) (imply (predecesor ?pre ?l) 
+                      (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?mact)) ))))
                   )
-    :effect (and (asignado ?l)
-                  (leyendo ?l ?mact)
-            )
+    :effect (and (asignado ?l) (leyendo ?l ?mact))
   )  
 )

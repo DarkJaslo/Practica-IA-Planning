@@ -22,22 +22,24 @@
 
   (:action leer
     :parameters (?l - libro ?mact - mes ?mant - mes)
-    :precondition (and (not (asignado ?l))
-                        (not (leido ?l))
-                        (inm_anterior ?mant ?mact)
-                        ;(quiere_leer ?l)
+    :precondition (and
+                    (not (asignado ?l))
+                    (not (leido ?l))
+                    (inm_anterior ?mant ?mact)
 
-                  ; Verifica que todos los prerequisitos se han asignado a meses previos al actual
-                  (forall (?pre - libro) (imply (predecesor ?pre ?l) (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?mact)) ))))
+                    ; Verifica que todos los prerequisitos se han asignado a meses previos al actual
+                    (forall (?pre - libro) (imply (predecesor ?pre ?l) 
+                      (or (leido ?pre) (exists (?mpre - mes) (and (leyendo ?pre ?mpre) (anterior ?mpre ?mact)) ))))
 
-                  ; Para todos los libros paralelos, si estan asignados, es en el mes anterior (mant) o en el actual (mact)
-                  (forall (?par - libro) (imply (and (paralelo ?par ?l) (asignado ?par)) (or (leyendo ?par ?mact) (leyendo ?par ?mant)  )))
-                  
+                    ; Para todos los libros paralelos, si estan asignados, es en el mes anterior (mant) o en el actual (mact)
+                    (forall (?par - libro) (imply (and (paralelo ?par ?l) (asignado ?par)) 
+                      (or (leyendo ?par ?mact) (leyendo ?par ?mant) )))
                   )
-    :effect (and (asignado ?l)
+    :effect (and  (asignado ?l)
                   (leyendo ?l ?mact)
-                  ; Obliga a leer todos los paralelos (que no se hayan leido ya)
-                  (forall (?par - libro) (when (and (paralelo ?par ?l) (not (or (leido ?par) (asignado ?par)))) (quiere_leer ?par)))
+                  ; Obliga a leer todos los paralelos (que no se hayan leido o hayan sido asignados ya)
+                  (forall (?par - libro) (when (and (paralelo ?par ?l) (not (or (leido ?par) (asignado ?par)))) 
+                    (quiere_leer ?par)))
             )
   )  
 )
