@@ -1,8 +1,8 @@
 # Genera los pngs de cada grafo de los juegos de prueba. Usa dot, que requiere instalar graphviz
 
-counter=3
-step=3
-limite=30
+counter=5
+step=5
+limite=60
 cd grafos-basico
 while [ $counter -le $limite ]
 do
@@ -11,9 +11,7 @@ do
 done
 cd ..
 
-counter=3
-step=3
-limite=30
+counter=5
 cd grafos-ext1
 while [ $counter -le $limite ]
 do
@@ -22,9 +20,7 @@ do
 done
 cd ..
 
-counter=3
-step=3
-limite=30
+counter=5
 cd grafos-ext2
 while [ $counter -le $limite ]
 do
@@ -33,9 +29,7 @@ do
 done
 cd ..
 
-counter=3
-step=3
-limite=30
+counter=5
 cd grafos-ext3
 while [ $counter -le $limite ]
 do

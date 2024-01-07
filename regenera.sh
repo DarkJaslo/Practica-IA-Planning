@@ -24,9 +24,9 @@ else
 fi
 
 make
-counter=3
-step=3
-limite=30
+counter=5
+step=5
+limite=60
 
 if [ ! -d "juegos-$1" ]; then
     mkdir "juegos-$1"

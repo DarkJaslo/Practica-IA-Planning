@@ -23,10 +23,10 @@ else
     exit
 fi
 
-counter=3
-step=3
-limite=30
-secs=75
+counter=5
+step=5
+limite=60
+secs=15
 while [ $counter -le $limite ]
 do
     echo "---------------------------------------------------------"
