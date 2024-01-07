@@ -72,8 +72,6 @@ int PROB_PAR = 10;   //Sobre 100, afectan varios factores
 int PROB_LEIDO = 10; //Sobre 100, se mira para cada libro
 int PROB_LEER = 80;  //Sobre 100, se mira para cada libro no leido
 long SEED;
-//long SEED = 1704571405; //Provisional
-//long SEED = time(NULL);
 mt19937 gen;
 uniform_int_distribution<int> distr;
 vector<bool> QUIERE_LEER;
@@ -105,7 +103,7 @@ int probPre(int sale, int entra)
     return PROB_PRE;
 }
 
-//Macro, entra una probabilidad y si el numero generado es menor devuelve cierto
+//Macro, recibe una probabilidad y si el numero generado es menor devuelve cierto
 //Por lo tanto, si prob=2 y randomN=1, cierto. Si randomN=13, falso.
 bool rollRandom(int prob)
 {
@@ -323,7 +321,7 @@ void printUniversalFacts()
     if(PAR_ON)
     {
         cout << "\t\t";
-        cout << "(inm_anterior Casper Enero) ";
+        cout << "(inm_anterior Casper Enero) "; //Mes fantasma
         for(int i = 0; i < MESES.size()-1; ++i)
         {
             cout << "(inm_anterior " << MESES[i] << " " << MESES[i+1] << ") ";
@@ -412,12 +410,73 @@ void printRelaciones()
     }
 }
 
+// Lo mismo que printDOT pero imprime al canal STDERR (2)
+void printDOTcerr()
+{
+    cerr << "digraph {\n";
+
+    cerr << "\t";
+    for(int i = 0; i < N; ++i)
+    {
+        cerr << i << "; ";
+    }
+    cerr << "\n";
+
+    if(PAR_ON)
+    {
+        cerr << "\tsubgraph Par {\n";
+        cerr << "\t\tedge [dir=none, color=red]\n";
+
+        /* Printea solo las aristas del problema
+        for(int i = 0; i < PARS.size(); i+=2)
+        {
+            //if(PARS[i].first > PARS[i].second) continue;
+            output << "\t\t" << PARS[i].first << " -> " << PARS[i].second << ";\n";
+        }
+        */
+
+        /* Printea todas las aristas entre paralelos (preferible, se entiende mejor) */
+        for(int i = 0; i < N; ++i)
+        {
+            for(int j = i+1; j < N; ++j)
+            {
+                if(PARALELO[i][j])
+                {
+                    cerr << "\t\t" << i << " -> " << j << ";\n";
+                }
+            }
+        }
+
+        cerr << "\t}\n\n";
+    }
+
+    if(PRE_ON)
+    {
+        cerr << "\tsubgraph Pre {\n";
+        cerr << "\t\tedge [color=blue]\n";
+        for(int i = 0; i < N; ++i)
+        {
+            for(int j = i+1; j < N; ++j)
+            {
+                if(DAG[i][j])
+                {
+                    cerr << "\t\t" << i << " -> " << j << ";\n";
+                }
+            }
+        }
+        cerr << "\t}\n";
+        cerr << "}\n";
+    }
+}
+
 /*
     Imprime el grafo en formato DOT, para poderse visualizar
     https://stackoverflow.com/questions/13236975/graphviz-dot-mix-directed-and-undirected
 */
 void printDOT()
 {
+    printDOTcerr();
+
     string filename = "grafos-";
     filename.append(ext);
     filename.append("/grafo");
@@ -425,6 +484,12 @@ void printDOT()
     filename.append(".dot");
 
     ofstream output(filename);
+
+    if(not output.is_open()) //No se esta usando el script shell, se usa el canal STDERR
+    {
+        return;
+    }
+
     output << "digraph {\n";
 
     output << "\t";
@@ -483,7 +548,7 @@ void printDOT()
 
 void usage()
 {
-    cout << "Usage: ./juegos-prueba [N] [seed] [extensiones]\nN es el numero de libros\nHay que especificar una seed para los numeros aleatorios\nPara las extensiones, las opciones son:\nbasico\next1\next2\next3\n";
+    cout << "Usage: ./pruebas [N] [seed] [extensiones]\nN es el numero de libros\nHay que especificar una seed para los numeros aleatorios\nPara las extensiones, las opciones son:\nbasico\next1\next2\next3\nPara guardar el fichero, se debe redirigir el canal 1 (./pruebas [parametros] > fichero-problema.pddl)\nPara guardar el grafo (lenguaje DOT) en un fichero, se debe redirigir el canal 2 (./pruebas [parametros] 2> fichero-para-el-grafo.dot)\nComando completo: ./pruebas N seed ext > prob.pddl 2> grafo.dot\n";
 }
 
 int main(int argc, char** argv)
@@ -495,9 +560,6 @@ int main(int argc, char** argv)
     }
 
     N = atoi(argv[1]);
-    //string pre = string(argv[2]);
-    //string par = string(argv[3]);
-    //string pag = string(argv[4]);
     SEED = atol(argv[2]);
     ext = string(argv[3]);
 
@@ -580,6 +642,6 @@ int main(int argc, char** argv)
 
     cout << ")\n"; //cierra fichero
 
-    //Print grafo en STDERR
+    //Print grafo
     printDOT();
 }

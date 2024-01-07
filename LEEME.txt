@@ -1,0 +1,8 @@
+El generador de problemas permite generar su grafo asociado en lenguaje DOT. Para verlo, se debe redirigir
+la salida del canal 2 (2> grafo.dot) a un fichero .dot, que se puede convertir a imagen usando el comando 
+"dot" (requiere instalar graphviz).
+
+png:
+dot -Tpng grafo.dot -o grafo.png
+pdf:
+dot -Tpdf grafo.dot -o grafo.pdf
