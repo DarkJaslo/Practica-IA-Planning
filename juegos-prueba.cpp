@@ -610,7 +610,7 @@ int main(int argc, char** argv)
     cout << "\t(:objects\n";
     //meses
     cout << "\t\t"; 
-    cout << "Casper" << " ";
+    if(PAR_ON) cout << "Casper" << " ";
     for(const string& mes : MESES)
         cout << mes << " ";
     cout << "- mes\n";
