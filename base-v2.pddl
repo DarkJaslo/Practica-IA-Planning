@@ -74,9 +74,7 @@
 	)
 
 	(:goal
-		; Para todos los libros que se quieren leer, asignados. Para los paralelos a los asignados, ya leidos o asignados
-		(and (forall (?l - libro) (imply (quiere_leer ?l) (asignado ?l)))
-			  ; (forall (?l - libro ?par - libro) (imply (and (asignado ?l) (paralelo ?l ?par)) (or (asignado ?par) (leido ?par))))
-		)
+		; Para todos los libros que se quieren leer, asignados.
+		(forall (?l - libro) (imply (quiere_leer ?l) (asignado ?l)))
 	)
 )
