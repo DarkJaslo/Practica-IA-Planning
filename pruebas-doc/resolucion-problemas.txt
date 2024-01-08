@@ -1,0 +1,980 @@
+------------------------------------------------------------------------------------------------------------
+
+basico1
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   21
+                         19
+                         17
+                         15
+                         13
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO7 ENERO
+        1: LEER LIBRO6 ENERO
+        2: LEER LIBRO5 ENERO
+        3: LEER LIBRO2 ENERO
+        4: LEER LIBRO1 ENERO
+        5: LEER LIBRO3 FEBRERO
+        6: LEER LIBRO9 FEBRERO
+        7: LEER LIBRO10 FEBRERO
+        8: LEER LIBRO8 FEBRERO
+        9: LEER LIBRO11 FEBRERO
+       10: LEER LIBRO18 ENERO
+       11: LEER LIBRO17 ENERO
+       12: LEER LIBRO14 ENERO
+       13: LEER LIBRO4 ENERO
+       14: LEER LIBRO16 FEBRERO
+       15: LEER LIBRO0 ENERO
+     
+
+time spent:    0.00 seconds instantiating 0 easy, 540 hard action templates
+               0.00 seconds reachability analysis, yielding 248 facts and 540 actions
+               0.00 seconds creating final representation with 246 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 1643 states, to a max depth of 0
+               0.00 seconds total time
+
+------------------------------------------------------------------------------------------------------------
+
+basico 2
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   43
+                         41
+                         39
+                         37
+                         35
+                         33
+                         31
+                         29
+                         27
+                         25
+                         23
+                         21
+                         20
+                         19
+                         18
+                         17
+                         16
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO35 ENERO
+        1: LEER LIBRO25 ENERO
+        2: LEER LIBRO24 ENERO
+        3: LEER LIBRO21 ENERO
+        4: LEER LIBRO16 ENERO
+        5: LEER LIBRO13 ENERO
+        6: LEER LIBRO12 ENERO
+        7: LEER LIBRO6 ENERO
+        8: LEER LIBRO5 ENERO
+        9: LEER LIBRO3 ENERO
+       10: LEER LIBRO2 ENERO
+       11: LEER LIBRO19 FEBRERO
+       12: LEER LIBRO4 FEBRERO
+       13: LEER LIBRO17 FEBRERO
+       14: LEER LIBRO7 FEBRERO
+       15: LEER LIBRO20 FEBRERO
+       16: LEER LIBRO29 FEBRERO
+       17: LEER LIBRO38 FEBRERO
+       18: LEER LIBRO31 FEBRERO
+       19: LEER LIBRO28 FEBRERO
+       20: LEER LIBRO37 FEBRERO
+       21: LEER LIBRO39 FEBRERO
+       22: LEER LIBRO36 ENERO
+       23: LEER LIBRO32 ENERO
+       24: LEER LIBRO27 ENERO
+       25: LEER LIBRO26 ENERO
+       26: LEER LIBRO14 ENERO
+       27: LEER LIBRO11 ENERO
+       28: LEER LIBRO18 FEBRERO
+       29: LEER LIBRO9 ENERO
+       30: LEER LIBRO1 ENERO
+       31: LEER LIBRO0 ENERO
+     
+
+time spent:    0.00 seconds instantiating 0 easy, 1266 hard action templates
+               0.00 seconds reachability analysis, yielding 519 facts and 1266 actions
+               0.00 seconds creating final representation with 517 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.14 seconds searching, evaluating 6272 states, to a max depth of 0
+               0.14 seconds total time
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext1-1
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   30
+                         28
+                         26
+                         24
+                         22
+                         20
+                         19
+                         18
+                         17
+                         16
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO16 ENERO
+        1: LEER LIBRO18 FEBRERO
+        2: LEER LIBRO8 ENERO
+        3: LEER LIBRO2 ENERO
+        4: LEER LIBRO0 ENERO
+        5: LEER LIBRO22 FEBRERO
+        6: LEER LIBRO15 FEBRERO
+        7: LEER LIBRO24 FEBRERO
+        8: LEER LIBRO21 MARZO
+        9: LEER LIBRO25 ENERO
+       10: LEER LIBRO23 ENERO
+       11: LEER LIBRO19 ENERO
+       12: LEER LIBRO17 ENERO
+       13: LEER LIBRO13 ENERO
+       14: LEER LIBRO14 FEBRERO
+       15: LEER LIBRO12 ENERO
+       16: LEER LIBRO11 ENERO
+       17: LEER LIBRO4 ENERO
+       18: LEER LIBRO3 ENERO
+       19: LEER LIBRO5 FEBRERO
+       20: LEER LIBRO6 MARZO
+       21: LEER LIBRO7 ABRIL
+       22: LEER LIBRO27 MAYO
+       23: LEER LIBRO1 ENERO
+     
+
+time spent:    0.00 seconds instantiating 0 easy, 1038 hard action templates
+               0.00 seconds reachability analysis, yielding 372 facts and 965 actions
+               0.00 seconds creating final representation with 372 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.05 seconds searching, evaluating 2709 states, to a max depth of 0
+               0.05 seconds total time
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext1-2
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:  192
+                        190
+                        188
+                        186
+                        184
+                        182
+                        180
+                        178
+                        176
+                        174
+                        172
+                        170
+                        168
+                        166
+                        164
+                        162
+                        160
+                        158
+                        156
+                        154
+                        152
+                        150
+                        148
+                        146
+                        144
+                        142
+                        140
+                        138
+                        136
+                        134
+                        132
+                        130
+                        128
+                        126
+                        124
+                        122
+                        120
+                        118
+                        116
+                        114
+                        112
+                        110
+                        108
+                        106
+                        104
+                        102
+                        100
+                         98
+                         96
+                         94
+                         92
+                         90
+                         88
+                         86
+                         84
+                         82
+                         80
+                         78
+                         77
+                         76
+                         75
+                         73
+                         71
+                         70
+                         69
+                         68
+                         67
+                         65
+                         63
+                         62
+                         61
+                         60
+                         59
+                         58
+                         56
+                         55
+                         54
+                         53
+                         52
+                         51
+                         50
+                         49
+                         48
+                         46
+                         44
+                         43
+                         42
+                         41
+                         40
+                         39
+                         38
+                         37
+                         36
+                         35
+                         34
+                         33
+                         32
+                         31
+                         30
+                         29
+                         28
+                         27
+                         25
+                         24
+                         23
+                         22
+                         21
+                         20
+                         19
+                         18
+                         17
+                         16
+                         14
+                         12
+                         11
+                          9
+                          8
+                          7
+                          5
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO119 ENERO
+        1: LEER LIBRO83 ENERO
+        2: LEER LIBRO77 ENERO
+        3: LEER LIBRO63 ENERO
+        4: LEER LIBRO55 ENERO
+        5: LEER LIBRO57 FEBRERO
+        6: LEER LIBRO80 MARZO
+        7: LEER LIBRO54 ENERO
+        8: LEER LIBRO52 ENERO
+        9: LEER LIBRO65 FEBRERO
+       10: LEER LIBRO49 ENERO
+       11: LEER LIBRO41 ENERO
+       12: LEER LIBRO32 ENERO
+       13: LEER LIBRO44 FEBRERO
+       14: LEER LIBRO26 ENERO
+       15: LEER LIBRO51 FEBRERO
+       16: LEER LIBRO70 MARZO
+       17: LEER LIBRO19 ENERO
+       18: LEER LIBRO24 FEBRERO
+       19: LEER LIBRO28 MARZO
+       20: LEER LIBRO18 ENERO
+       21: LEER LIBRO16 ENERO
+       22: LEER LIBRO17 FEBRERO
+       23: LEER LIBRO60 MARZO
+       24: LEER LIBRO13 ENERO
+       25: LEER LIBRO11 ENERO
+       26: LEER LIBRO53 FEBRERO
+       27: LEER LIBRO76 MARZO
+       28: LEER LIBRO8 ENERO
+       29: LEER LIBRO12 FEBRERO
+       30: LEER LIBRO25 MARZO
+       31: LEER LIBRO30 ABRIL
+       32: LEER LIBRO58 MAYO
+       33: LEER LIBRO7 ENERO
+       34: LEER LIBRO5 ENERO
+       35: LEER LIBRO20 FEBRERO
+       36: LEER LIBRO22 MARZO
+       37: LEER LIBRO39 ABRIL
+       38: LEER LIBRO46 MAYO
+       39: LEER LIBRO67 JUNIO
+       40: LEER LIBRO73 JULIO
+       41: LEER LIBRO4 ENERO
+       42: LEER LIBRO15 FEBRERO
+       43: LEER LIBRO37 MARZO
+       44: LEER LIBRO62 ABRIL
+       45: LEER LIBRO72 MAYO
+       46: LEER LIBRO92 JUNIO
+       47: LEER LIBRO107 JULIO
+       48: LEER LIBRO3 ENERO
+       49: LEER LIBRO48 FEBRERO
+       50: LEER LIBRO2 ENERO
+       51: LEER LIBRO0 ENERO
+       52: LEER LIBRO1 FEBRERO
+       53: LEER LIBRO9 MARZO
+       54: LEER LIBRO31 ABRIL
+       55: LEER LIBRO75 MAYO
+       56: LEER LIBRO99 JUNIO
+       57: LEER LIBRO113 JULIO
+       58: LEER LIBRO14 FEBRERO
+       59: LEER LIBRO29 MARZO
+       60: LEER LIBRO45 ABRIL
+       61: LEER LIBRO64 MAYO
+       62: LEER LIBRO87 JUNIO
+       63: LEER LIBRO103 MARZO
+       64: LEER LIBRO124 AGOSTO
+       65: LEER LIBRO78 AGOSTO
+       66: LEER LIBRO84 SEPTIEMBRE
+       67: LEER LIBRO90 OCTUBRE
+       68: LEER LIBRO117 NOVIEMBRE
+       69: LEER LIBRO89 FEBRERO
+       70: LEER LIBRO120 JUNIO
+       71: LEER LIBRO100 ABRIL
+       72: LEER LIBRO34 FEBRERO
+       73: LEER LIBRO74 MARZO
+       74: LEER LIBRO109 ABRIL
+       75: LEER LIBRO121 ABRIL
+       76: LEER LIBRO98 FEBRERO
+       77: LEER LIBRO33 ABRIL
+       78: LEER LIBRO108 MAYO
+       79: LEER LIBRO125 ABRIL
+       80: LEER LIBRO85 MARZO
+       81: LEER LIBRO43 FEBRERO
+       82: LEER LIBRO71 MARZO
+       83: LEER LIBRO79 ABRIL
+       84: LEER LIBRO116 MAYO
+       85: LEER LIBRO96 FEBRERO
+       86: LEER LIBRO114 MARZO
+       87: LEER LIBRO86 FEBRERO
+       88: LEER LIBRO93 ABRIL
+       89: LEER LIBRO115 FEBRERO
+       90: LEER LIBRO123 FEBRERO
+       91: LEER LIBRO97 FEBRERO
+       92: LEER LIBRO122 FEBRERO
+       93: LEER LIBRO126 ENERO
+       94: LEER LIBRO127 FEBRERO
+       95: LEER LIBRO118 ENERO
+       96: LEER LIBRO105 ENERO
+       97: LEER LIBRO104 ENERO
+       98: LEER LIBRO101 ENERO
+       99: LEER LIBRO88 ENERO
+      100: LEER LIBRO66 ENERO
+      101: LEER LIBRO95 FEBRERO
+      102: LEER LIBRO112 MARZO
+      103: LEER LIBRO40 ENERO
+      104: LEER LIBRO91 FEBRERO
+      105: LEER LIBRO38 ENERO
+      106: LEER LIBRO36 ENERO
+      107: LEER LIBRO82 FEBRERO
+      108: LEER LIBRO23 ENERO
+      109: LEER LIBRO50 FEBRERO
+      110: LEER LIBRO21 ENERO
+      111: LEER LIBRO27 FEBRERO
+      112: LEER LIBRO47 MARZO
+      113: LEER LIBRO61 ABRIL
+      114: LEER LIBRO69 MAYO
+      115: LEER LIBRO111 JUNIO
+      116: LEER LIBRO10 ENERO
+      117: LEER LIBRO42 FEBRERO
+      118: LEER LIBRO56 MARZO
+      119: LEER LIBRO102 ABRIL
+      120: LEER LIBRO6 ENERO
+      121: LEER LIBRO35 FEBRERO
+     
+
+time spent:    0.01 seconds instantiating 0 easy, 6396 hard action templates
+               0.00 seconds reachability analysis, yielding 1554 facts and 4987 actions
+               0.00 seconds creating final representation with 1554 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.02 seconds building connectivity graph
+               6.44 seconds searching, evaluating 38708 states, to a max depth of 0
+               6.47 seconds total time
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext1-3
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+ff: goal can be simplified to FALSE. No plan will solve it
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext2-1
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   34
+                         31
+                         29
+                         27
+                         25
+                         23
+                         22
+                         20
+                         18
+                         17
+                         16
+                         15
+                         14
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO20 FEBRERO ENERO
+        1: LEER LIBRO7 ENERO CASPER
+        2: LEER LIBRO11 FEBRERO ENERO
+        3: LEER LIBRO6 ENERO CASPER
+        4: LEER LIBRO0 ENERO CASPER
+        5: LEER LIBRO4 ENERO CASPER
+        6: LEER LIBRO9 FEBRERO ENERO
+        7: LEER LIBRO12 MARZO FEBRERO
+        8: LEER LIBRO14 ABRIL MARZO
+        9: LEER LIBRO22 ENERO CASPER
+       10: LEER LIBRO1 FEBRERO ENERO
+       11: LEER LIBRO3 MARZO FEBRERO
+       12: LEER LIBRO5 ABRIL MARZO
+       13: LEER LIBRO16 MAYO ABRIL
+       14: LEER LIBRO19 FEBRERO ENERO
+       15: LEER LIBRO2 FEBRERO ENERO
+       16: LEER LIBRO21 MARZO FEBRERO
+       17: LEER LIBRO8 MARZO FEBRERO
+       18: LEER LIBRO24 MARZO FEBRERO
+       19: LEER LIBRO23 ENERO CASPER
+       20: LEER LIBRO13 ENERO CASPER
+       21: LEER LIBRO15 FEBRERO ENERO
+       22: LEER LIBRO10 DICIEMBRE NOVIEMBRE
+       23: LEER LIBRO18 ABRIL MARZO
+       24: LEER LIBRO17 ABRIL MARZO
+       25: REACH-GOAL
+     
+
+time spent:    0.01 seconds instantiating 0 easy, 2586 hard action templates
+               0.00 seconds reachability analysis, yielding 357 facts and 2291 actions
+               0.00 seconds creating final representation with 334 relevant facts, 0 relevant fluents
+               0.01 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.10 seconds searching, evaluating 2383 states, to a max depth of 0
+               0.12 seconds total time
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext2-2
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   61
+                         59
+                         57
+                         55
+                         53
+                         51
+                         49
+                         47
+                         45
+                         43
+                         41
+                         39
+                         37
+                         35
+                         33
+                         31
+                         29
+                         28
+                         27
+                         26
+                         25
+                         24
+                         23
+                         22
+                         21
+                         20
+                         19
+                         18
+                         17
+                         16
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO19 ABRIL MARZO
+        1: LEER LIBRO37 ENERO CASPER
+        2: LEER LIBRO3 FEBRERO ENERO
+        3: LEER LIBRO6 FEBRERO ENERO
+        4: LEER LIBRO17 ENERO CASPER
+        5: LEER LIBRO8 ENERO CASPER
+        6: LEER LIBRO26 FEBRERO ENERO
+        7: LEER LIBRO14 FEBRERO ENERO
+        8: LEER LIBRO9 FEBRERO ENERO
+        9: LEER LIBRO18 MARZO FEBRERO
+       10: LEER LIBRO15 ENERO CASPER
+       11: LEER LIBRO13 ENERO CASPER
+       12: LEER LIBRO1 ENERO CASPER
+       13: LEER LIBRO0 ENERO CASPER
+       14: LEER LIBRO5 ENERO CASPER
+       15: LEER LIBRO2 ENERO CASPER
+       16: LEER LIBRO4 FEBRERO ENERO
+       17: LEER LIBRO11 FEBRERO ENERO
+       18: LEER LIBRO24 MARZO FEBRERO
+       19: LEER LIBRO29 ABRIL MARZO
+       20: LEER LIBRO35 ABRIL MARZO
+       21: LEER LIBRO12 FEBRERO ENERO
+       22: LEER LIBRO33 FEBRERO ENERO
+       23: LEER LIBRO32 FEBRERO ENERO
+       24: LEER LIBRO22 ABRIL MARZO
+       25: LEER LIBRO41 FEBRERO ENERO
+       26: LEER LIBRO20 MARZO FEBRERO
+       27: LEER LIBRO49 ABRIL MARZO
+       28: LEER LIBRO36 MARZO FEBRERO
+       29: LEER LIBRO42 MARZO FEBRERO
+       30: LEER LIBRO7 MARZO FEBRERO
+       31: LEER LIBRO44 MARZO FEBRERO
+       32: LEER LIBRO45 MARZO FEBRERO
+       33: LEER LIBRO47 FEBRERO ENERO
+       34: LEER LIBRO31 ENERO CASPER
+       35: LEER LIBRO43 MAYO ABRIL
+       36: LEER LIBRO38 ENERO CASPER
+       37: LEER LIBRO34 ENERO CASPER
+       38: LEER LIBRO27 ENERO CASPER
+       39: LEER LIBRO23 DICIEMBRE NOVIEMBRE
+       40: LEER LIBRO10 MARZO FEBRERO
+       41: LEER LIBRO28 ABRIL MARZO
+       42: LEER LIBRO39 MAYO ABRIL
+       43: LEER LIBRO48 MARZO FEBRERO
+       44: REACH-GOAL
+     
+
+time spent:    0.15 seconds instantiating 0 easy, 5370 hard action templates
+               0.00 seconds reachability analysis, yielding 675 facts and 4576 actions
+               0.05 seconds creating final representation with 630 relevant facts, 0 relevant fluents
+               0.01 seconds computing LNF
+               0.00 seconds building connectivity graph
+               1.05 seconds searching, evaluating 7909 states, to a max depth of 0
+               1.26 seconds total time
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext3-1
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   35
+                         33
+                         31
+                         29
+                         27
+                         25
+                         23
+                         21
+                         19
+                         18
+                         16
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO2 ENERO CASPER
+        1: LEER LIBRO4 ENERO CASPER
+        2: LEER LIBRO8 ENERO CASPER
+        3: LEER LIBRO10 ENERO CASPER
+        4: LEER LIBRO14 ENERO CASPER
+        5: LEER LIBRO27 ENERO CASPER
+        6: LEER LIBRO7 FEBRERO ENERO
+        7: LEER LIBRO20 FEBRERO ENERO
+        8: LEER LIBRO1 ENERO CASPER
+        9: LEER LIBRO3 ENERO CASPER
+       10: LEER LIBRO0 ENERO CASPER
+       11: LEER LIBRO9 FEBRERO ENERO
+       12: LEER LIBRO12 FEBRERO ENERO
+       13: LEER LIBRO19 FEBRERO ENERO
+       14: LEER LIBRO22 FEBRERO ENERO
+       15: LEER LIBRO29 FEBRERO ENERO
+       16: LEER LIBRO18 MARZO FEBRERO
+       17: LEER LIBRO23 MARZO FEBRERO
+       18: LEER LIBRO25 MARZO FEBRERO
+       19: LEER LIBRO28 DICIEMBRE NOVIEMBRE
+       20: LEER LIBRO6 MARZO FEBRERO
+       21: LEER LIBRO11 MARZO FEBRERO
+       22: LEER LIBRO13 MARZO FEBRERO
+       23: LEER LIBRO15 DICIEMBRE NOVIEMBRE
+       24: LEER LIBRO16 MARZO FEBRERO
+       25: LEER LIBRO17 ABRIL MARZO
+       26: LEER LIBRO24 ABRIL MARZO
+       27: LEER LIBRO26 ABRIL MARZO
+       28: REACH-GOAL
+     
+
+time spent:    0.01 seconds instantiating 0 easy, 2418 hard action templates
+               0.00 seconds reachability analysis, yielding 427 facts and 2388 actions
+               0.00 seconds creating final representation with 402 relevant facts, 24 relevant fluents
+               0.01 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.97 seconds searching, evaluating 4578 states, to a max depth of 0
+               0.99 seconds total time
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+ext3-2
+
+------------------------------------------------------------------------------------------------------------
+
+
+ff: parsing domain file
+domain 'LECTURA' defined
+ ... done.
+ff: parsing problem file
+problem 'LIBROS-BASE' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+task contains conditional effects. turning off state domination.
+
+
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+advancing to distance:   38
+                         36
+                         34
+                         32
+                         30
+                         28
+                         26
+                         24
+                         22
+                         21
+                         20
+                         19
+                         18
+                         17
+                         16
+                         15
+                         14
+                         13
+                         12
+                         11
+                         10
+                          9
+                          8
+                          7
+                          6
+                          5
+                          4
+                          3
+                          2
+                          1
+                          0
+
+ff: found legal plan as follows
+
+step    0: LEER LIBRO0 ENERO CASPER
+        1: LEER LIBRO1 ENERO CASPER
+        2: LEER LIBRO4 ENERO CASPER
+        3: LEER LIBRO12 ENERO CASPER
+        4: LEER LIBRO13 ENERO CASPER
+        5: LEER LIBRO27 ENERO CASPER
+        6: LEER LIBRO20 FEBRERO ENERO
+        7: LEER LIBRO22 MARZO FEBRERO
+        8: LEER LIBRO2 ENERO CASPER
+        9: LEER LIBRO16 ENERO CASPER
+       10: LEER LIBRO3 FEBRERO ENERO
+       11: LEER LIBRO6 FEBRERO ENERO
+       12: LEER LIBRO7 FEBRERO ENERO
+       13: LEER LIBRO9 FEBRERO ENERO
+       14: LEER LIBRO10 FEBRERO ENERO
+       15: LEER LIBRO14 FEBRERO ENERO
+       16: LEER LIBRO23 FEBRERO ENERO
+       17: LEER LIBRO17 MARZO FEBRERO
+       18: LEER LIBRO18 MARZO FEBRERO
+       19: LEER LIBRO19 MARZO FEBRERO
+       20: LEER LIBRO21 MARZO FEBRERO
+       21: LEER LIBRO24 MARZO FEBRERO
+       22: LEER LIBRO25 MARZO FEBRERO
+       23: LEER LIBRO8 MARZO FEBRERO
+       24: LEER LIBRO26 ABRIL MARZO
+       25: LEER LIBRO28 ABRIL MARZO
+       26: LEER LIBRO29 ABRIL MARZO
+       27: LEER LIBRO30 DICIEMBRE NOVIEMBRE
+       28: LEER LIBRO31 MARZO FEBRERO
+       29: LEER LIBRO15 ABRIL MARZO
+       30: REACH-GOAL
+     
+
+time spent:    0.01 seconds instantiating 0 easy, 2220 hard action templates
+               0.01 seconds reachability analysis, yielding 453 facts and 2048 actions
+               0.00 seconds creating final representation with 424 relevant facts, 24 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.59 seconds searching, evaluating 3948 states, to a max depth of 0
+               0.61 seconds total time
+
